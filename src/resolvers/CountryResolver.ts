@@ -1,6 +1,7 @@
-import { Arg, Args, ID, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 
 import Country from "../entities/Country";
+import { CreateCountry } from "../entities/Country.args";
 
 @Resolver()
 export class CountryResolver {
@@ -10,12 +11,17 @@ export class CountryResolver {
   }
 
   @Query(() => Country)
-  country(@Arg("countryCode") countryCode: string) {
-    return Country.getCountryByCode(countryCode);
+  countriesByContinent(@Arg("countryCode") countryCode: string) {
+    return Country.getCountryByCountryCode(countryCode);
   }
 
-  // @Mutation(() => Country)
-  // createCountry(countryCode: String, label: String, logo: String) {
-  //   return Country.createCountry(coutryCode, label, logo);
-  // }
+  @Query(() => Country)
+  country(@Arg("countryCode") countryCode: string) {
+    return Country.getCountryByCountryCode(countryCode);
+  }
+
+  @Mutation(() => Country)
+  createCountry(countryData: CreateCountry) {
+    return Country.createCountry(countryData);
+  }
 }

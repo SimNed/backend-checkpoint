@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { CreateCountry } from "./Country.args";
 
@@ -13,6 +13,10 @@ class Country extends BaseEntity {
   @Field()
   countryCode!: string;
 
+  @Column({ unique: true, length: 2 })
+  @Field()
+  continentCode!: string;
+
   @Column({ unique: true })
   @Field()
   label!: string;
@@ -26,6 +30,7 @@ class Country extends BaseEntity {
 
     if (country) {
       this.countryCode = country.countryCode;
+      this.continentCode = country.continentCode;
       this.label = country.label;
       this.logo = country.logo;
     }
@@ -36,13 +41,25 @@ class Country extends BaseEntity {
     return countries;
   }
 
-  static async getCountryByCode(countryCode: string): Promise<Country> {
+  static async getCountryByCountryCode(countryCode: string): Promise<Country> {
     const country = await Country.findOne({
       where: { countryCode },
     });
     if (!country) {
       throw new Error(
         `Country with country code ${countryCode} does not exist.`
+      );
+    }
+    return country;
+  }
+
+  static async getCountryByContinentCode(continentCode: string): Promise<Country> {
+    const country = await Country.findOne({
+      where: { continentCode },
+    });
+    if (!country) {
+      throw new Error(
+        `Country with continent code ${continentCode} does not exist.`
       );
     }
     return country;

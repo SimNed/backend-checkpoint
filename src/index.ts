@@ -2,7 +2,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSchema } from "type-graphql";
-import getDataSource from "./database/database";
+import { getDataSource } from "./database/databaseUtils";
 import { CountryResolver } from "./resolvers/CountryResolver";
 
 const PORT = 4000;

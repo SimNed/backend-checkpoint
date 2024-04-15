@@ -5,6 +5,9 @@ export class CreateCountry {
   countryCode!: string;
 
   @Field()
+  continentCode!: string;
+
+  @Field()
   label!: string;
 
   @Field()
