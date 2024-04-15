@@ -3,7 +3,7 @@ import Country from "../entities/Country";
 
 let dataSource: DataSource;
 
-export const getDataSource = async () => {
+const getDataSource = async () => {
   if (!dataSource) {
     dataSource = new DataSource({
       type: "sqlite",
@@ -14,3 +14,5 @@ export const getDataSource = async () => {
   }
   return dataSource;
 };
+
+export default getDataSource;
